@@ -1,0 +1,41 @@
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Interfaces;
+using Domain;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Persistence;
+
+namespace Application.User
+{
+    public class CurrentUser
+    {
+        public class Query : IRequest<AppUser> { }
+
+        public class Handler : IRequestHandler<Query, AppUser>
+        {
+            private readonly UserManager<AppUser> _userManager;
+            private readonly IJwtGenerator _jwtGenerator;
+            private readonly IUserAccesor _userAccessor;
+            public Handler(UserManager<AppUser> userManager, IJwtGenerator jwtGenerator, IUserAccesor userAccessor)
+            {
+                _userAccessor = userAccessor;
+                _jwtGenerator = jwtGenerator;
+                _userManager = userManager;
+            }
+
+            public async Task<AppUser> Handle(Query request, CancellationToken cancellationToken)
+            {
+                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+
+                return new AppUser
+                {
+                    DisplayName = user.DisplayName,
+                    UserName = user.UserName,
+                    Token = _jwtGenerator.CreateToken(user),
+                    Image = null
+                };
+            }
+        }
+    }
+}
