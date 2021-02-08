@@ -162,6 +162,9 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             )}
           />
         </Segment>
+        <Segment>
+        <iframe width="600" height="450" src="https://datastudio.google.com/embed/reporting/11e6c4a7-231d-4aa9-b5ca-daf401d77127/page/6zXD"></iframe>
+        </Segment>
       </Grid.Column>
     </Grid>
   );
