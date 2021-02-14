@@ -8,7 +8,7 @@ export interface IActivity {
     venue: string;
     isGoing: boolean;
     isHost: boolean;
-    attendees: IAttendee[];
+    attendees: IAttendee[]
 }
 
 export interface IActivityFormValues extends Partial<IActivity> {
@@ -33,7 +33,7 @@ export class ActivityFormValues implements IActivityFormValues {
     }
 }
 
-export interface IAttendee{
+export interface IAttendee {
     username: string;
     displayName: string;
     image: string;
